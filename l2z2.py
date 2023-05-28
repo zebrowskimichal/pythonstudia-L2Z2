@@ -2,14 +2,19 @@
 
 
 class Animal:
-    def __init__(self, imie, wiek, wzrost):
+    def __init__(self, imie, wiek, wzrost, waga):
         self.imie = imie
         self.wiek = int(wiek)
         self.konwertujWzrost(int(wzrost))
+        self.konwertujWage(int(waga))
 
     def konwertujWzrost(self, wzrostWcm):
         wzrostWmm = wzrostWcm * 10
         self.wzrost = wzrostWmm
+         
+    def konwertujWage(self, wagaWg):
+        wagaWkg = wagaWg / 1000
+        self.waga = wagaWkg
 
     def wolaj(self):
         print("Hej, " + self.imie + "!")
@@ -37,8 +42,8 @@ class Object:
 
 
 class Human(Animal):
-    def __init__(self, imie, wiek, wzrost, nazwisko, plec):
-        super().__init__(imie, wiek, wzrost)
+    def __init__(self, imie, wiek, wzrost, nazwisko, plec, waga):
+        super().__init__(imie, wiek, wzrost, waga)
         self.nazwisko = nazwisko
         self.plec = plec
 
@@ -70,6 +75,17 @@ class Human(Animal):
     def jedz(self):
         print("Czlowiek je mieso")
 
+    def BMI(self):
+        self.__ciezar = self.waga
+        self.__bmi = self.__ciezar / self.wzrost ** 2
+        if(self.__bmi < 18.5):
+            print("niedowaga")
+        if(self.__bmi >= 18.5 and self.__bmi < 25):
+            print("waga prawidlowa")
+        if(self.__bmi >= 25):
+            print("nadwaga")
+
+##Hermetyzacja przydaje sie w sytuacji gdy na zewnatrz klasy chcemy udostepnic tylko to co jest niezbedne. Ogranicza to tez opcje "popsucia" naszej klasy, np poprzez zmiane jakiejs zmiennej wewnatrz tej klasy
 
 ##czlowiek = Human("Anita", "Wlodarczyk", "Mezczyzna", 21, 180)
 ##czlowiek.daneOsobowe()
@@ -88,9 +104,8 @@ czlowiek.jedz()
 
 class Cat(Animal):
     def __init__(self, imie, wiek, wzrost, rasa, waga):
-        super().__init__(imie, wiek, wzrost)
+        super().__init__(imie, wiek, wzrost, waga)
         self.rasa = rasa
-        self.konwertujWage(int(waga))
 
     def Wolaj(self):
         print("Chodz, tu: " + self.imie)
@@ -106,12 +121,7 @@ class Cat(Animal):
 
     def zmienWage(self, nowaWaga):
         self.waga = nowaWaga
-        kot.konwertujWage(self.waga)
-        print("Kot zmienia wage, na: " + str(self.waga))
-
-    def konwertujWage(self, wagaWg):
-        wagaWkg = wagaWg / 1000
-        self.waga = wagaWkg
+        print("Kot zmienia wage, na: " + str(self.waga) + " kg")
 
     def wolaj(self, imie):
         print("Meow! Meow, meow " + self.imie)
