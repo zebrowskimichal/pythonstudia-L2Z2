@@ -1,6 +1,6 @@
-##Zmodyfikowalem klasy Human i Cat, poniewaz nie mialy weogole albo mialy zbyt malo elementow wspolnych, aby korzystac z dziedziczenia
+##Zmodyfikowalem klasy Human i Cat, poniewaz nie mialy wogole albo mialy zbyt malo elementow wspolnych, aby korzystac z dziedziczenia (na potrzeby tego zadania)
 
-
+##Klasa nadrzedna
 class Animal:
     def __init__(self, imie, wiek, wzrost, waga):
         self.imie = imie
@@ -23,23 +23,29 @@ class Animal:
         pass
 
 
-##Abstrakcja jest przydatna w sytuacji gdy potrzebujemy miec jedna glowna klase, w ktorej bedzie zawarte wiele metod, zmiennych. Klasy dziedziczace z tej glownej klasy, beda natomiast posiadac 'wlasne', abstrakcyjne metody, ktore tak naprawde ustala sie dopiero podczas operacji dziedziczenia
+##Abstrakcja jest przydatna w sytuacji gdy potrzebujemy miec jedna glowna klase (chcemy zdefiniowac ogolna strukture klasy), w ktorej bedzie zawarte wiele metod. Klasy dziedziczace z tej glownej klasy, beda natomiast posiadac 'wlasne', abstrakcyjne implementacje tychze metod, ktore tak naprawde ustala sie dopiero podczas operacji dziedziczenia
 
-##Dziedziczenie z pewnoscia przyda sie w sytuacji, gdy mamy wiele takich samych zmiennych, metod w roznych klasach. Przydatne szczegolnie, aby zmniejszyc dlugosc naszego kodu.
+##Dziedziczenie z pewnoscia przyda sie w sytuacji, gdy mamy wiele takich samych zmiennych, metod w roznych klasach. Przydatne szczegolnie, aby zmniejszyc dlugosc naszego kodu i poprawic ogolna spojnosc. Z wad nalezy wymienic mozliwosc tworzenia bardzo wielu dziedziczen, co na koncu moze mocno utrudnic zrozumienie kodu, jego testowanie oraz debugowanie
 
+##Dodatkowa klasa dziedziczaca z klasy Animal
+class Object(Animal):
+    def __init__(self, imie, wiek, wzrost, waga, rodzaj):
+        super().__init__(imie, wiek, wzrost, waga)
+        self.rodzaj = rodzaj
 
-class Object:
-    def __init__(self, ilemm):
-        self.ilemm = ilemm
+    def wolaj(self):
+        print("Halo, jestem " + self.imie + "!")
+        print("Jestem " + self.rodzaj)
 
-    def rosnij(self, lista):
-        for x in lista:
-            Animal.wzrost = self.wzrost + self.ilemm
+#################
+obiekt1 = Object("Jaskolek", 1, 20, 2, "ptak")
+obiekt1.wolaj()
+obiekt2 = Animal("Andrzej", 6, 15, 15)
+obiekt2.wolaj()
+print("#############################################################")
+#################
 
-    def Przedstawianie(lista):
-        for x in lista:
-            Animal.wolaj()
-
+#Polimorfizm pozwala na zdefiniowanie wielu wersji tej samej metody w roznych klasach, ktore dziedzicza z jednej klasy. Pozwala, to na dostosowanie metody do swoich potrzeb (potrzeb klasy podrzednej). Do wad nalezy zaliczyc trudnosc w zrozumieniu kodu, przy zbyt duzym wykorzystaniu polimorfizmu oraz mozliwa utrata wydajnosci
 
 class Human(Animal):
     def __init__(self, imie, wiek, wzrost, nazwisko, plec, waga):
@@ -85,21 +91,21 @@ class Human(Animal):
         if(self.__bmi >= 25):
             print("nadwaga")
 
-##Hermetyzacja przydaje sie w sytuacji gdy na zewnatrz klasy chcemy udostepnic tylko to co jest niezbedne. Ogranicza to tez opcje "popsucia" naszej klasy, np poprzez zmiane jakiejs zmiennej wewnatrz tej klasy
+##Hermetyzacja przydaje sie w sytuacji gdy na zewnatrz klasy chcemy udostepnic tylko to co jest niezbedne. Ogranicza to tez opcje "popsucia" naszej klasy (np poprzez zmiane jakiejs zmiennej wewnatrz tej klasy). Z wad nalezy jednak wymienic mozliwosc niekontrolowanego dostepu i zmiany, przez brak 'surowej' kontroli dostepu- w pythonie podkreslenie ('_') jest tylko 'znakiem' dla programisty, programista nie musi wcale przesatrzegac tej konwencji
 
-##czlowiek = Human("Anita", "Wlodarczyk", "Mezczyzna", 21, 180)
-##czlowiek.daneOsobowe()
-##czlowiek.daneGenetyczne()
-##czlowiek.wszystkieInformacje()
-##czlowiek.rosnij(190)
-##czlowiek.daneGenetyczne()
-##czlowiek.slub("Ciesla")
-##czlowiek.daneOsobowe()
-czlowiek = Human("Andrzej", 28, 180, "JSON", "m")
+#################
+czlowiek = Human("Anita", 21, 180, "Wlodarczyk", "Kobieta", 53)
 czlowiek.daneOsobowe()
+czlowiek.daneGenetyczne()
+czlowiek.wszystkieInformacje()
+czlowiek.rosnij(190)
+czlowiek.daneGenetyczne()
+czlowiek.slub("Ciesla")
 czlowiek.wolaj()
 czlowiek.jedz()
-##############
+czlowiek.BMI()
+print("#############################################################")
+#################
 
 
 class Cat(Animal):
@@ -107,7 +113,7 @@ class Cat(Animal):
         super().__init__(imie, wiek, wzrost, waga)
         self.rasa = rasa
 
-    def Wolaj(self):
+    def wolaj_chodz(self):
         print("Chodz, tu: " + self.imie)
 
     def daneKota(self):
@@ -129,11 +135,12 @@ class Cat(Animal):
     def jedz(self):
         print("Kot je rybki")
 
-
-# kot = Cat("Andrzej", 2010, "Dachowiec", 16500)
-# kot.Wolaj()
-# kot.wiek()
-# kot.daneKota()
-# kot.noweImie("Andruch")
-# kot.Wolaj
-# kot.zmienWage(10200)
+#################
+kot = Cat("Andrew", 8, 15, "Dachowiec", 14)
+kot.wolaj_chodz()
+kot.daneKota()
+kot.noweImie("Andruch")
+kot.wolaj
+kot.zmienWage(5)
+print("#############################################################")
+#################
